@@ -27,8 +27,8 @@ export enum GrpcOpType {
 }
 
 export declare class RpcContext {
-    public call: IRpcServerCall<RequestType, ResponseType>;
-    public callback: IRpcServerCallback<ResponseType>;
+    public call: IRpcServerCall<any, any>;
+    public callback: IRpcServerCallback<any>;
 
     constructor();
 
@@ -43,7 +43,7 @@ export declare class RpcContext {
 // gRPC Application
 export type RpcMiddleware = (ctx: RpcContext, next: MiddlewareNext) => Promise<any>;
 export type MiddlewareNext = () => Promise<any>;
-export type WrappedHandler = (call: IRpcServerCall<RequestType, ResponseType>, callback?: IRpcServerCallback<ResponseType>) => Promise<any>;
+export type WrappedHandler = (call: IRpcServerCall<any, any>, callback?: IRpcServerCallback<any>) => Promise<any>;
 
 export declare class RpcApplication extends EventEmitter {
     constructor();

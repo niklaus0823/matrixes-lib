@@ -15,8 +15,8 @@ export enum GrpcOpType {
 
 export class RpcContext {
 
-    public call: IRpcServerCall<RequestType, ResponseType>;
-    public callback: IRpcServerCallback<ResponseType>;
+    public call: IRpcServerCall<any, any>;
+    public callback: IRpcServerCallback<any>;
 
     constructor() {
         // do nothing

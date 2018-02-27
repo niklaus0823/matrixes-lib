@@ -11,7 +11,7 @@ const debug = require('debug')('matrix:application');
 
 export type RpcMiddleware = (ctx: RpcContext, next: MiddlewareNext) => Promise<any>;
 export type MiddlewareNext = () => Promise<any>;
-export type WrappedHandler = (call: IRpcServerCall<RequestType, ResponseType>, callback?: IRpcServerCallback<ResponseType>) => Promise<any>;
+export type WrappedHandler = (call: IRpcServerCall<any, any>, callback?: IRpcServerCallback<any>) => Promise<any>;
 
 export class RpcApplication extends EventEmitter {
 
@@ -78,7 +78,7 @@ export class RpcApplication extends EventEmitter {
      * @returns {RpcContext}
      * @private
      */
-    private _createContext(call: IRpcServerCall<RequestType, ResponseType>, callback?: IRpcServerCallback<ResponseType>): RpcContext {
+    private _createContext(call: IRpcServerCall<any, any>, callback?: IRpcServerCallback<any>): RpcContext {
         let ctx = new RpcContext();
 
         ctx.call = call;
@@ -116,7 +116,7 @@ export class RpcApplication extends EventEmitter {
             this.on('error', this._onError);
         }
 
-        return async (call: IRpcServerCall<RequestType, ResponseType>, callback?: IRpcServerCallback<ResponseType>) => {
+        return async (call: IRpcServerCall<any, any>, callback?: IRpcServerCallback<any>) => {
             const ctx = this._createContext(call, callback);
             const onError = (err) => ctx.onError(err);
             return fn(ctx).catch(onError);

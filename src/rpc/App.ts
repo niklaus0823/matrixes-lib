@@ -27,7 +27,7 @@ export class RpcApplication extends EventEmitter {
     /**
      * Get the gRPC Server.
      *
-     * @returns {Server}
+     * @returns {grpc.Server}
      */
     public get server() {
         return this._server;

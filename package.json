@@ -1,6 +1,6 @@
 {
   "name": "matrixes-lib",
-  "version": "0.0.1-dev-0.1",
+  "version": "0.0.1-dev-0.4",
   "author": "fengjie",
   "description": "Lib for Microservice on Node.js.",
   "homepage": "https://github.com/niklaus0823/matrixes-lib#readme",
@@ -18,6 +18,7 @@
     "google-protobuf": "^3.5.0",
     "grpc": "^1.9.1",
     "is-generator-function": "^1.0.7",
+    "joi": "^13.1.2",
     "koa": "^2.5.0",
     "koa-convert": "^1.2.0",
     "protobufjs": "^6.8.4"

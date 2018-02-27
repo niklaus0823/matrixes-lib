@@ -1,4 +1,4 @@
-import * as joi from 'Joi';
+import * as joi from 'joi';
 import {promisify} from 'util';
 
 let joiValidate = promisify(joi.validate) as {

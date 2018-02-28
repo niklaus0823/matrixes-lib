@@ -61,7 +61,7 @@ export class RpcApplication extends EventEmitter {
      * @param {RpcMiddleware} middleware
      * @returns {RpcApplication}
      */
-    use(middleware: RpcMiddleware) {
+    use(middleware: RpcMiddleware): RpcApplication {
         if (typeof middleware !== 'function') throw new TypeError('middleware must be a function!');
         if (isGeneratorFunction(middleware)) {
             middleware = koaConvert(middleware);
@@ -94,7 +94,7 @@ export class RpcApplication extends EventEmitter {
      * @param {Error} err
      * @private
      */
-    private _onError(err: Error) {
+    private _onError(err: Error): void {
         assert(err instanceof Error, `non-error thrown: ${err}`);
 
         const msg = err.stack || err.toString();
@@ -108,7 +108,7 @@ export class RpcApplication extends EventEmitter {
      * @param {RpcMiddleware} reqHandler
      * @returns {WrappedHandler}
      */
-    public wrapGrpcHandler(reqHandler: RpcMiddleware) {
+    public wrapGrpcHandler(reqHandler: RpcMiddleware): WrappedHandler {
         let middleware = [...this._middleware, reqHandler];
         let fn = koaCompose(middleware);
 

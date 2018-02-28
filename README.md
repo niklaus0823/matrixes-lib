@@ -1,19 +1,13 @@
-# Matrixes
+# Matrixes Microservice Tool Chain
 =========================
-Tools for developing with Microservice on Node.js.
-
-## Warning
-
-Project is remove
-
-## Prerequisites
-
-``` bash
-$ npm install protoc-gen-grpc -g
-```
+NPM Module for Matrixes Microservice on Node.js.
 
 ## Install
 
 ```bash
-$ npm install matrixes-cli -g
+$ npm install matrixes-lib -save
 ```
+
+## Simple
+
+[matrixes-simple](https://github.com/niklaus0823/matrixes-simple)

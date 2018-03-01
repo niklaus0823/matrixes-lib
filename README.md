@@ -3,6 +3,14 @@
 
 gRPC Server & APIGateway Server Lib for Matrixes Microservice on Node.js.
 
+## Aim
+
+This project was forked from [agreatfool/sasdn](https://github.com/agreatfool/sasdn), and was intended to separate Command Tools and gRpc Server Source Code.
+
+* other difference
+  * Remove bluebird, and use util.promisify
+  * The NPM package size is more littler, and install more faster
+
 ## Install
 
 ```bash

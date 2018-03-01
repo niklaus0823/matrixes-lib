@@ -1,7 +1,8 @@
-# Matrixes Microservice Tool Chain
+# matrixes-lib
+
 ---
 
-gRPC Server & APIGateway Server Lib for Matrixes Microservice on Node.js.
+Node.js module for create a gRPC server as Microservices or Koa server as ApiGateway.
 
 ## Aim
 

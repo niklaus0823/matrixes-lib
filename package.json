@@ -1,8 +1,8 @@
 {
   "name": "matrixes-lib",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "author": "fengjie",
-  "description": "Lib for Microservice on Node.js.",
+  "description": "Node.js module for create a gRPC server as Microservices or Koa server as ApiGateway.",
   "homepage": "https://github.com/niklaus0823/matrixes-lib#readme",
   "repository": {
     "type": "git",

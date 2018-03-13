@@ -1,6 +1,6 @@
 {
   "name": "matrixes-lib",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "author": "fengjie",
   "description": "Node.js module for create a gRPC server as Microservices or Koa server as ApiGateway.",
   "homepage": "https://github.com/niklaus0823/matrixes-lib#readme",
@@ -21,12 +21,14 @@
     "joi": "^13.1.2",
     "koa": "^2.5.0",
     "koa-convert": "^1.2.0",
+    "koa-router": "^7.4.0",
     "protobufjs": "^6.8.4"
   },
   "devDependencies": {
     "@types/google-protobuf": "^3.2.7",
     "@types/joi": "^13.0.5",
     "@types/koa": "^2.0.44",
+    "@types/koa-router": "^7.0.27",
     "@types/node": "^9.4.1"
   }
 }

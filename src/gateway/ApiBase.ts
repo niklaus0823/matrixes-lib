@@ -1,13 +1,13 @@
-import {Context as KoaContext, Middleware as KoaMiddleware, Request as KoaRequest} from 'koa';
+import * as koa from 'koa';
 import {joi, joiValidate} from '../utility/Joi';
 import {MiddlewareNext} from '../rpc/App';
 
-export interface GatewayContext extends KoaContext {
+export interface GatewayContext extends koa.Context {
     params: any;
     request: GatewayRequest;
 }
 
-export interface GatewayRequest extends KoaRequest {
+export interface GatewayRequest extends koa.Request {
     body: any;
 }
 
@@ -36,11 +36,11 @@ export abstract class GatewayApiBase {
 
     public abstract handleMock(ctx: GatewayContext, next: MiddlewareNext, params: GatewayApiParams): Promise<any>;
 
-    public register(): Array<string | KoaMiddleware> {
+    public register(): Array<string | koa.Middleware> {
         return [this.uri, this._validate(), this._mock(), this._execute()];
     };
 
-    protected _validate(): KoaMiddleware {
+    protected _validate(): koa.Middleware {
         return async (ctx: GatewayContext, next: MiddlewareNext): Promise<void> => {
             let aggregatedParams = this._parseParams(ctx);
             let joiSchemaMap = this._convertSchemaDefToJoiSchema(this.schemaDefObj);
@@ -58,7 +58,7 @@ export abstract class GatewayApiBase {
         };
     }
 
-    protected _mock(): KoaMiddleware {
+    protected _mock(): koa.Middleware {
         return async (ctx: GatewayContext, next: MiddlewareNext): Promise<void> => {
             let aggregatedParams = this._parseParams(ctx);
             if (process.env.NODE_ENV == 'development' && aggregatedParams.hasOwnProperty('mock') && aggregatedParams['mock'] == 1) {
@@ -69,7 +69,7 @@ export abstract class GatewayApiBase {
         };
     }
 
-    protected _execute(): KoaMiddleware {
+    protected _execute(): koa.Middleware {
         return async (ctx: GatewayContext, next: MiddlewareNext): Promise<void> => {
             let aggregatedParams = this._parseParams(ctx);
             ctx.body = await this.handle(ctx, next, aggregatedParams);

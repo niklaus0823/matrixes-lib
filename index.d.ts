@@ -1,7 +1,7 @@
 import * as grpc from 'grpc';
 import * as joi from 'joi';
-import * as koa from 'koa';
-import * as koaRouter from 'koa-router';
+import * as Koa from 'koa';
+import * as KoaRouter from 'koa-router';
 import * as EventEmitter from 'events';
 import {Context as KoaContext, Middleware as KoaMiddleware, Request as KoaRequest} from 'koa';
 
@@ -100,4 +100,4 @@ export declare abstract class GatewayApiBase {
     register(): Array<string | KoaMiddleware>;
 }
 
-export {koa, koaRouter};
+export {Koa, KoaRouter};

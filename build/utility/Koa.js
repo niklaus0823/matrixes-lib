@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-const koa = require("koa");
-exports.koa = koa;
-const koaRouter = require("koa-router");
-exports.koaRouter = koaRouter;
+const Koa = require("koa");
+exports.Koa = Koa;
+const KoaRouter = require("koa-router");
+exports.KoaRouter = KoaRouter;

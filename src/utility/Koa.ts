@@ -1,4 +1,4 @@
-import * as koa from 'koa';
-import * as koaRouter from 'koa-router';
+import * as Koa from 'koa';
+import * as KoaRouter from 'koa-router';
 
-export {koa, koaRouter};
+export {Koa, KoaRouter};

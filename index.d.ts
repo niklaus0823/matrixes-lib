@@ -97,6 +97,8 @@ export declare abstract class GatewayApiBase {
 
     abstract handle(ctx: GatewayContext, next: MiddlewareNext, params: GatewayApiParams): Promise<any>;
 
+    abstract handleMock(ctx: GatewayContext, next: MiddlewareNext, params: GatewayApiParams): Promise<any>;
+
     register(): Array<string | KoaMiddleware>;
 }
 

@@ -4,3 +4,5 @@ const Koa = require("koa");
 exports.Koa = Koa;
 const KoaRouter = require("koa-router");
 exports.KoaRouter = KoaRouter;
+const KoaBodyParser = require("koa-bodyparser");
+exports.KoaBodyParser = KoaBodyParser;

@@ -43,15 +43,16 @@ export abstract class GatewayApiBase {
     protected _validate(): koa.Middleware {
         return async (ctx: GatewayContext, next: MiddlewareNext): Promise<void> => {
             let aggregatedParams = this._parseParams(ctx);
-            let joiSchemaMap = this._convertSchemaDefToJoiSchema(this.schemaDefObj);
 
             try {
-                await joiValidate(aggregatedParams, joiSchemaMap, {allowUnknown: true});
+                await joiValidate(aggregatedParams, this.schemaDefObj, {allowUnknown: true});
                 await next();
             } catch (e) {
+                const error = e as joi.ValidationError;
+                const validationDetail = error.details ? `: ${error.details[0].message}` : '';
                 const errorObject = {
                     code: 1001001,
-                    message: 'Invalid Params'
+                    message: 'Invalid Params' + validationDetail
                 };
                 ctx.body = JSON.stringify(errorObject);
             }
@@ -80,51 +81,4 @@ export abstract class GatewayApiBase {
     protected _parseParams(ctx: GatewayContext): {[key: string]: any} {
         return Object.assign({}, ctx.params, ctx.query, {body: ctx.request.body}); // bodyParse required
     }
-
-    protected _convertSchemaDefToJoiSchema(gatewayJoiSchemaMap: GatewayJoiSchemaMap): joi.SchemaMap {
-        let joiSchemaMap = {} as joi.SchemaMap;
-
-        for (let key in gatewayJoiSchemaMap) {
-            let gatewayJoiSchema = gatewayJoiSchemaMap[key] as GatewayJoiSchema;
-            let joiSchema = {} as joi.Schema;
-
-            switch (gatewayJoiSchema.type) {
-                case 'array':
-                    joiSchema = (gatewayJoiSchema.required)
-                        ? joi.array().required()
-                        : joi.array().optional();
-                    break;
-                case 'boolean':
-                    joiSchema = (gatewayJoiSchema.required)
-                        ? joi.boolean().required()
-                        : joi.boolean().optional();
-                    break;
-                case 'number':
-                    joiSchema = (gatewayJoiSchema.required)
-                        ? joi.number().required()
-                        : joi.number().optional();
-                    break;
-                case 'object':
-                    joiSchema = (gatewayJoiSchema.required)
-                        ? joi.object(this._convertSchemaDefToJoiSchema(gatewayJoiSchema.schema)).required()
-                        : joi.object(this._convertSchemaDefToJoiSchema(gatewayJoiSchema.schema)).optional();
-                    break;
-                case 'string':
-                    joiSchema = (gatewayJoiSchema.required)
-                        ? joi.string().required()
-                        : joi.string().optional();
-                    break;
-                default:
-                    joiSchema = (gatewayJoiSchema.required)
-                        ? joi.any().required()
-                        : joi.any().optional();
-                    break;
-            }
-
-            joiSchemaMap[key] = joiSchema;
-        }
-
-        return joiSchemaMap;
-    }
-
 }

@@ -1,6 +1,8 @@
 import * as grpc from 'grpc';
 import * as assert from 'assert';
+import * as jspb from 'google-protobuf';
 import {IRpcServerCall, IRpcServerCallback} from './RpcRedefine';
+import {joi, joiValidate} from '../utility/Joi';
 
 export enum GrpcOpType {
     SEND_INITIAL_METADATA = 0,
@@ -61,4 +63,15 @@ export class RpcContext {
             // do nothing
         });
     }
+
+    public validate = async (aggregatedParams: jspb.Message, schemaDefObj: joi.SchemaMap): Promise<void> => {
+        try {
+            await joiValidate(aggregatedParams.toObject(), schemaDefObj, {allowUnknown: true});
+        } catch (e) {
+            throw new Error(JSON.stringify({
+                code: 1001001,
+                message: 'Invalid Params' + e.details ? `: ${e.details[0].message}` : ''
+            }));
+        }
+    };
 }

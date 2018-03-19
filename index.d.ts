@@ -1,5 +1,6 @@
 import * as grpc from 'grpc';
 import * as joi from 'joi';
+import * as jspb from 'google-protobuf';
 import * as Koa from 'koa';
 import * as KoaRouter from 'koa-router';
 import * as KoaBodyParser from 'koa-bodyparser';
@@ -41,6 +42,8 @@ export declare class RpcContext {
      * @param {Error} err
      */
     onError(err: Error): void;
+
+    validate(aggregatedParams: jspb.Message, schemaDefObj: joi.SchemaMap): Promise<void>;
 }
 
 // gRPC Application
@@ -64,7 +67,42 @@ export declare class RpcApplication extends EventEmitter {
 
 // Gateway Utility
 declare let joiValidate: <T>(value: Object, schema: Object, options: joi.ValidationOptions) => Promise<T>;
-export {joi, joiValidate};
+
+declare namespace joiType {
+    export const vDouble: any;
+
+    export const vFloat: any;
+
+    export const vNumber: any;
+
+    export const vInt32: any;
+
+    export const vSint32: any;
+
+    export const vSfixed32: any;
+
+    export const vInt64: any;
+
+    export const vSint64: any;
+
+    export const vSfixed64: any;
+
+    export const vUintNumber: any;
+
+    export const vUint32: any;
+
+    export const vFixed32: any;
+
+    export const vUint64: any;
+
+    export const vFixed64: any;
+
+    export const vBool: any;
+
+    export const vString: any;
+}
+
+export {joi, joiValidate, joiType};
 
 // Gateway
 export interface GatewayContext extends KoaContext {
@@ -76,16 +114,6 @@ export interface GatewayRequest extends KoaRequest {
     body: any;
 }
 
-export interface GatewayJoiSchema {
-    type: string;
-    required: boolean;
-    schema?: GatewayJoiSchemaMap;
-}
-
-export interface GatewayJoiSchemaMap {
-    [name: string]: GatewayJoiSchema;
-}
-
 export interface GatewayApiParams {
     [key: string]: any;
 }
@@ -94,7 +122,7 @@ export declare abstract class GatewayApiBase {
     method: string;
     uri: string;
     type: string;
-    schemaDefObj: GatewayJoiSchemaMap;
+    schemaDefObj: joi.SchemaMap;
 
     abstract handle(ctx: GatewayContext, next: MiddlewareNext, params: GatewayApiParams): Promise<any>;
 

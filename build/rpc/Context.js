@@ -1,7 +1,16 @@
 "use strict";
+var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : new P(function (resolve) { resolve(result.value); }).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 const grpc = require("grpc");
 const assert = require("assert");
+const Joi_1 = require("../utility/Joi");
 var GrpcOpType;
 (function (GrpcOpType) {
     GrpcOpType[GrpcOpType["SEND_INITIAL_METADATA"] = 0] = "SEND_INITIAL_METADATA";
@@ -15,6 +24,17 @@ var GrpcOpType;
 })(GrpcOpType = exports.GrpcOpType || (exports.GrpcOpType = {}));
 class RpcContext {
     constructor() {
+        this.validate = (aggregatedParams, schemaDefObj) => __awaiter(this, void 0, void 0, function* () {
+            try {
+                yield Joi_1.joiValidate(aggregatedParams.toObject(), schemaDefObj, { allowUnknown: true });
+            }
+            catch (e) {
+                throw new Error(JSON.stringify({
+                    code: 1001001,
+                    message: 'Invalid Params' + e.details ? `: ${e.details[0].message}` : ''
+                }));
+            }
+        });
         // do nothing
     }
     /**

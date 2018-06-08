@@ -1,6 +1,6 @@
 import * as koa from 'koa';
 import {joi, joiValidate} from '../utility/Joi';
-import {MiddlewareNext} from '../rpc/App';
+import {MiddlewareNext} from '..';
 
 export interface GatewayContext extends koa.Context {
     params: any;
